@@ -11,8 +11,8 @@ import Paper from '@mui/material/Paper'
 export default function Student() {
     
     const paperStyle = {padding: '50px 20px', width: 600, margin:"20px auto"}
-    const[nameVar, setName]=useState("") // State management for name field
-    const[addressVar, setAddress]=useState("") // State management for address field
+    const[nameVar, setName]=useState("") // State management for name field. (Name state)
+    const[addressVar, setAddress]=useState("") // State management for address field. (Address State)
 
     return (
     <Container>
@@ -29,6 +29,9 @@ export default function Student() {
             />
             </Box>
         </Paper>
+        <h2>Watch as values change through state management with useState</h2>
+        {nameVar}
+        {addressVar}
     </Container>
     );
 }
