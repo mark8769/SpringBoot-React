@@ -1,5 +1,7 @@
 // Student.js: Component
 // Adding student form
+// https://mui.com/material-ui/react-text-field/
+// 
 
 // import * as React from 'react';
 import React, { useState } from 'react';
@@ -7,12 +9,19 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Container from '@mui/material/Container'
 import Paper from '@mui/material/Paper'
+import Button from '@mui/material/Button'
 
 export default function Student() {
     
-    const paperStyle = {padding: '50px 20px', width: 600, margin:"20px auto"}
-    const[nameVar, setName]=useState("") // State management for name field. (Name state)
-    const[addressVar, setAddress]=useState("") // State management for address field. (Address State)
+    const paperStyle = {padding: '50px 20px', width: 600, margin:"20px auto"};
+    const[nameVar, setName]=useState(""); // State management for name field. (Name state)
+    const[addressVar, setAddress]=useState(""); // State management for address field. (Address State)
+
+    const handleClick=(e)=>{
+        e.preventDefault();
+        const student={nameVar, addressVar};
+        console.log(student);
+    }
 
     return (
     <Container>
@@ -25,8 +34,9 @@ export default function Student() {
             />
             <TextField id="outlined-basic" label="Student Address" variant="outlined" fullWidth
             value={addressVar}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => setAddress(e.target.value)}
             />
+            <Button variant="contained" color="secondary" onClick={handleClick}>Submit</Button>
             </Box>
         </Paper>
         <h2>Watch as values change through state management with useState</h2>
