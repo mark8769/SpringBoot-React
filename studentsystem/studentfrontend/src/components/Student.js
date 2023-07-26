@@ -39,7 +39,7 @@ export default function Student() {
     }
 
     useEffect(() => {
-        fetch("http://localhost/student/getAll")
+        fetch("http://localhost:8080/student/getAll")
         .then(res => res.json())
         .then((result) => {
             setStudents(result)
@@ -65,6 +65,18 @@ export default function Student() {
         <h2>Watch as values change through state management with useState</h2>
         {name}
         {address}
+        //////////////////////////////////////////////////////////////
+        // Showing all students
+        <Paper elevation={3} style={paperStyle}>
+            {students.map(student =>(
+                <Paper elevation={6} style={{margin: "10px", padding: "15px", textAlign: "left"}} key={student.id}>
+                    ID: {student.id}
+                    Namee: {student.name}
+                    Address: {student.address}
+                </Paper>
+            ))}
+        </Paper>
+        //////////////////////////////////////////////////////////////
     </Container>
     );
 }
