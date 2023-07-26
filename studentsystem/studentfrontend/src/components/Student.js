@@ -4,7 +4,7 @@
 // 
 
 // import * as React from 'react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Container from '@mui/material/Container'
@@ -14,12 +14,19 @@ import Button from '@mui/material/Button'
 export default function Student() {
     
     const paperStyle = {padding: '50px 20px', width: 600, margin:"20px auto"};
-    const[nameVar, setName]=useState(""); // State management for name field. (Name state)
-    const[addressVar, setAddress]=useState(""); // State management for address field. (Address State)
+    const[name, setName]=useState(""); // State management for name field. (Name state)
+    const[address, setAddress]=useState(""); // State management for address field. (Address State)
+
+    const[students, setStudents]=useState([]) // Create empty array for students pulled from database.
 
     const handleClick=(e)=>{
         e.preventDefault();
-        const student={nameVar, addressVar};
+        // Must match Student attribute names used in Java Code, Cant be different...
+        // Or you could construct the JSON...
+        // payload = {"name": nameVar, "address": addressVar}
+        // Doing it the way shown below, sets the key as whatever is declared in use state...
+        // E.g. {"nameVar": nameVar, "addressVar": addressVar} which won't work when unpacked in Java Code
+        const student={name, address};
         console.log(student);
         console.log("Making POST request to add student")
         fetch("http://localhost:8080/student/add",{
@@ -28,8 +35,16 @@ export default function Student() {
             body: JSON.stringify(student)
         }).then( ()=> {
             console.log("New student added");
-        });
+        })
     }
+
+    useEffect(() => {
+        fetch("http://localhost/student/getAll")
+        .then(res => res.json())
+        .then((result) => {
+            setStudents(result)
+        })
+    },[]) // What is this syntax???
 
     return (
     <Container>
@@ -37,19 +52,19 @@ export default function Student() {
             <h1 style={{color: "blue"}}><u>Add Student</u></h1>
             <Box component="form" sx={{'& > :not(style)': { m: 1},}} noValidate autoComplete="off">
             <TextField id="outlined-basic" label="Student Name" variant="outlined" fullWidth
-            value={nameVar} // Using var declared in const
+            value={name} // Using var declared in const
             onChange={(e) => setName(e.target.value)} // when we write something (event), save text into nameVar
             />
             <TextField id="outlined-basic" label="Student Address" variant="outlined" fullWidth
-            value={addressVar}
+            value={address}
             onChange={(e) => setAddress(e.target.value)}
             />
             <Button variant="contained" color="secondary" onClick={handleClick}>Submit</Button>
             </Box>
         </Paper>
         <h2>Watch as values change through state management with useState</h2>
-        {nameVar}
-        {addressVar}
+        {name}
+        {address}
     </Container>
     );
 }
