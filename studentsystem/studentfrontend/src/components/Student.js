@@ -21,6 +21,14 @@ export default function Student() {
         e.preventDefault();
         const student={nameVar, addressVar};
         console.log(student);
+        console.log("Making POST request to add student")
+        fetch("http://localhost:8080/student/add",{
+            method: "POST",
+            headers: {"Content-Type":"application/json"},
+            body: JSON.stringify(student)
+        }).then( ()=> {
+            console.log("New student added");
+        });
     }
 
     return (
