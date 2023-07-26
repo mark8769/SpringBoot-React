@@ -10,6 +10,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/student")
+@CrossOrigin // Prevents "TypeError: Failed to fetch from frontend that's on different port"
+// E.g. Spring Boot hosted on http://localhost:8080/
+// E.g Front end hosted on http://localhost:3030/
+// Making API calls from different origin than http://localhost:8080/
 public class StudentController {
     private final StudentService studentService;
 
